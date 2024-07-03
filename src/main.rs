@@ -9,13 +9,14 @@ use std::{io, process};
 ///   ESCAPE '"'
 ///   ENCODING 'UTF8'
 ///
-/// Also truncates the number of fields to the exact amount PostgreSQL 15 expects for COPY
+/// Has optional number of fields to allow use in non-PostgreSQL contexts
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    /// number of fields (truncates to number or skips row if too little)
+    /// Optional number of fields (truncates to number or skips row if too little)
+    /// Preferred for use in PostgreSQL context
     #[arg(short, long)]
-    number_of_fields: u8,
+    number_of_fields: Option<usize>,
 
     /// Input Delimiter
     #[arg(short, long, default_value_t = ',')]
@@ -36,7 +37,7 @@ struct Args {
 
 fn main() {
     let args = Args::parse();
-    let number_of_fields = args.number_of_fields as usize;
+    let number_of_fields = args.number_of_fields;
     let delimiter = args.delimiter as u8;
     let quote = args.quote as u8;
     let escape = args.escape as u8;

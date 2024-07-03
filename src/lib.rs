@@ -6,7 +6,7 @@ use std::io::{Read, Write};
 pub fn run<R, W>(
     io_reader: R,
     io_writer: W,
-    number_of_fields: usize,
+    number_of_fields: Option<usize>,
     delimiter: u8,
     quote: u8,
     escape: u8,
@@ -24,13 +24,22 @@ where
     init_csv_reader_builder(&mut csv_reader_builder, delimiter, quote, escape);
     let mut csv_reader = csv_reader_builder.from_reader(io_reader_utf8);
 
-    let mut csv_writer = csv::WriterBuilder::new().from_writer(io_writer);
+    let mut csv_writer = csv::WriterBuilder::new()
+        .flexible(number_of_fields.is_none())
+        .from_writer(io_writer);
 
     for result in csv_reader.records() {
         match result {
             Ok(mut record) => {
-                if record.len() >= number_of_fields {
-                    record.truncate(number_of_fields);
+                if let Some(truncate_to) = number_of_fields {
+                    if record.len() >= truncate_to {
+                        record.truncate(truncate_to);
+                        record.trim();
+                        csv_writer.write_record(&record)?;
+                    } else {
+                        // ignore record
+                    }
+                } else {
                     record.trim();
                     csv_writer.write_record(&record)?;
                 }

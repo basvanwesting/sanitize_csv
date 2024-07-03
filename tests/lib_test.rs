@@ -14,7 +14,7 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, 3, b';', b'"', b'"', "ascii");
+        let result = run(&mut reader, &mut writer, Some(3), b';', b'"', b'"', "ascii");
         assert!(result.is_ok());
 
         assert_eq!(writer.len(), 24);
@@ -29,7 +29,7 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, 3, b';', b'"', b'"', "utf8");
+        let result = run(&mut reader, &mut writer, Some(3), b';', b'"', b'"', "utf8");
         assert!(result.is_ok());
 
         assert_eq!(writer.len(), 25);
@@ -44,7 +44,15 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, 3, b';', b'"', b'"', "latin1");
+        let result = run(
+            &mut reader,
+            &mut writer,
+            Some(3),
+            b';',
+            b'"',
+            b'"',
+            "latin1",
+        );
         assert!(result.is_ok());
 
         assert_eq!(writer.len(), 25);
@@ -59,7 +67,7 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, 3, b';', b'"', b'"', "utf8");
+        let result = run(&mut reader, &mut writer, Some(3), b';', b'"', b'"', "utf8");
         assert!(result.is_err());
 
         let e = result.err().unwrap();
@@ -76,7 +84,15 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, 3, b';', b'"', b'"', "latin1");
+        let result = run(
+            &mut reader,
+            &mut writer,
+            Some(3),
+            b';',
+            b'"',
+            b'"',
+            "latin1",
+        );
         assert!(result.is_ok());
 
         assert_eq!(writer.len(), 27);
@@ -91,7 +107,7 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, 2, b';', b'"', b'"', "ascii");
+        let result = run(&mut reader, &mut writer, Some(2), b';', b'"', b'"', "ascii");
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();
@@ -104,7 +120,7 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, 3, b';', b'"', b'"', "ascii");
+        let result = run(&mut reader, &mut writer, Some(3), b';', b'"', b'"', "ascii");
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();
@@ -117,11 +133,24 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, 4, b';', b'"', b'"', "ascii");
+        let result = run(&mut reader, &mut writer, Some(4), b';', b'"', b'"', "ascii");
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();
         assert_eq!(output, "abc,def,ghi,jkl\n");
+    }
+
+    #[test]
+    fn run_ascii_semicolon_flexible_valid_flexible_fields() {
+        let f = File::open("tests/fixtures/ascii_semicolon_flexible_valid.csv").unwrap();
+        let mut reader = BufReader::new(f);
+        let mut writer = Vec::new();
+
+        let result = run(&mut reader, &mut writer, None, b';', b'"', b'"', "ascii");
+        assert!(result.is_ok());
+
+        let output = String::from_utf8(writer).unwrap();
+        assert_eq!(output, "foo,bar,baz\nabc,def,ghi,jkl\nabc,def\n");
     }
 
     #[test]
@@ -130,7 +159,7 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, 3, b';', b'"', b'"', "ascii");
+        let result = run(&mut reader, &mut writer, Some(3), b';', b'"', b'"', "ascii");
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();
@@ -144,7 +173,15 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, 3, b';', b'\0', b'\\', "ascii");
+        let result = run(
+            &mut reader,
+            &mut writer,
+            Some(3),
+            b';',
+            b'\0',
+            b'\\',
+            "ascii",
+        );
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();
