@@ -1,9 +1,11 @@
 Convert a stdin CSV to PostgreSQL 15 standards for use in `COPY ... FROM ... WITH FORMAT CSV` \
-The output uses the following standards (which are also the input defaults): \ 
-  DELIMITER ',' \ 
-  QUOTE '"' \ 
-  ESCAPE '"' \
+The output uses the following standards (which are also the input defaults):
+```
+  DELIMITER ','
+  QUOTE '"'
+  ESCAPE '"'
   ENCODING 'UTF8'
+```
 
 ```
 Usage: sanitize_csv [OPTIONS]
