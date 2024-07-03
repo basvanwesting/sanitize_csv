@@ -10,14 +10,14 @@ pub fn run<R, W>(
     delimiter: u8,
     quote: u8,
     escape: u8,
-    encoding_label: Option<&str>,
+    force_encoding_label: Option<&str>,
 ) -> Result<(), Box<dyn Error>>
 where
     R: Read,
     W: Write,
 {
     let mut decode_builder = DecodeReaderBytesBuilder::new();
-    init_decode_builder(&mut decode_builder, encoding_label);
+    init_decode_builder(&mut decode_builder, force_encoding_label);
     let io_reader_utf8 = decode_builder.build(io_reader);
 
     let mut csv_reader_builder = csv::ReaderBuilder::new();
@@ -55,9 +55,9 @@ where
 
 fn init_decode_builder(
     decode_builder: &mut DecodeReaderBytesBuilder,
-    encoding_label: Option<&str>,
+    force_encoding_label: Option<&str>,
 ) {
-    if let Some(label) = encoding_label {
+    if let Some(label) = force_encoding_label {
         decode_builder
             .bom_sniffing(false)
             .strip_bom(true)

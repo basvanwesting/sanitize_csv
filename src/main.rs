@@ -13,11 +13,6 @@ use std::{io, process};
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    /// Optional number of fields (truncates to number or skips row if too little)
-    /// Preferred for use in PostgreSQL context
-    #[arg(short, long)]
-    number_of_fields: Option<usize>,
-
     /// Input Delimiter
     #[arg(short, long, default_value_t = ',')]
     delimiter: char,
@@ -27,13 +22,18 @@ struct Args {
     quote: char,
 
     /// Input Escape
-    #[arg(long, default_value_t = '"')]
+    #[arg(short, long, default_value_t = '"')]
     escape: char,
 
-    /// Input forced encoding label (https://encoding.spec.whatwg.org/#concept-encoding-get)
-    /// strips BOM
-    #[arg(long)]
-    encoding: Option<String>,
+    /// Force input encoding label (https://encoding.spec.whatwg.org/#concept-encoding-get).
+    /// Ignores and strips BOM
+    #[arg(short, long)]
+    force_encoding: Option<String>,
+
+    /// Optional number of fields (truncates to number or skips row if too little).
+    /// Advised to use in PostgreSQL context
+    #[arg(short, long)]
+    number_of_fields: Option<usize>,
 }
 
 fn main() {
@@ -42,7 +42,7 @@ fn main() {
     let delimiter = args.delimiter as u8;
     let quote = args.quote as u8;
     let escape = args.escape as u8;
-    let encoding = &args.encoding;
+    let force_encoding = &args.force_encoding;
 
     let stdin = io::stdin();
     let reader = stdin.lock();
@@ -54,7 +54,7 @@ fn main() {
         delimiter,
         quote,
         escape,
-        encoding.as_deref(),
+        force_encoding.as_deref(),
     ) {
         Ok(()) => (),
         Err(e) => {
