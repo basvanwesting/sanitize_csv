@@ -30,9 +30,10 @@ struct Args {
     #[arg(long, default_value_t = '"')]
     escape: char,
 
-    /// Input encoding
-    #[arg(long, default_value = "utf8")]
-    encoding: String,
+    /// Input forced encoding label (https://encoding.spec.whatwg.org/#concept-encoding-get)
+    /// strips BOM
+    #[arg(long)]
+    encoding: Option<String>,
 }
 
 fn main() {
@@ -53,7 +54,7 @@ fn main() {
         delimiter,
         quote,
         escape,
-        encoding,
+        encoding.as_deref(),
     ) {
         Ok(()) => (),
         Err(e) => {
