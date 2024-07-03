@@ -1,5 +1,5 @@
 [package]
-name = "prepare_csv_for_postgresql_copy"
+name = "sanitize_csv"
 version = "0.1.0"
 edition = "2021"
 

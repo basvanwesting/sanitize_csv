@@ -1,5 +1,5 @@
 use clap::Parser;
-use prepare_csv_for_postgresql_copy::run;
+use sanitize_csv::run;
 use std::{io, process};
 
 /// Convert a stdin CSV to PostgreSQL 15 standards for use in `COPY ... FROM ... WITH FORMAT CSV`

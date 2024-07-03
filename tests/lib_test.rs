@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod lib_tests {
-    use prepare_csv_for_postgresql_copy::run;
+    use sanitize_csv::run;
     use std::fs::File;
     use std::io::BufReader;
 

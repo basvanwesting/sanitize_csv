@@ -160,16 +160,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8f232d6ef707e1956a43342693d2a31e72989554d58299d7a88738cc95b0d35c"
 
 [[package]]
-name = "prepare_csv_for_postgresql_copy"
-version = "0.1.0"
-dependencies = [
- "clap",
- "csv",
- "encoding_rs",
- "encoding_rs_io",
-]
-
-[[package]]
 name = "proc-macro2"
 version = "1.0.67"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -192,6 +182,16 @@ name = "ryu"
 version = "1.0.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1ad4cc8da4ef723ed60bced201181d83791ad433213d8c24efffda1eec85d741"
+
+[[package]]
+name = "sanitize_csv"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "csv",
+ "encoding_rs",
+ "encoding_rs_io",
+]
 
 [[package]]
 name = "serde"
