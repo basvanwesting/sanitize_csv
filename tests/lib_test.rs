@@ -9,20 +9,12 @@ mod lib_tests {
     }
 
     #[test]
-    fn run_ascii_semicolon_valid() {
+    fn run_default_semicolon_valid() {
         let f = File::open("tests/fixtures/ascii_semicolon_valid.csv").unwrap();
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(
-            &mut reader,
-            &mut writer,
-            Some(3),
-            b';',
-            b'"',
-            b'"',
-            Some("ascii"),
-        );
+        let result = run(&mut reader, &mut writer, Some(3), b';', b'"', b'"', None);
         assert!(result.is_ok());
 
         assert_eq!(writer.len(), 24);
@@ -101,29 +93,6 @@ mod lib_tests {
     }
 
     #[test]
-    fn run_latin1_semicolon_as_ascii_valid() {
-        let f = File::open("tests/fixtures/latin1_semicolon_valid.csv").unwrap();
-        let mut reader = BufReader::new(f);
-        let mut writer = Vec::new();
-
-        let result = run(
-            &mut reader,
-            &mut writer,
-            Some(3),
-            b';',
-            b'"',
-            b'"',
-            Some("ascii"),
-        );
-        assert!(result.is_ok());
-
-        assert_eq!(writer.len(), 25);
-
-        let output = String::from_utf8(writer).unwrap();
-        assert_eq!(output, "foo,bar,baz\nabc,déf,ghi\n");
-    }
-
-    #[test]
     fn run_latin1_semicolon_as_default_invalid() {
         let f = File::open("tests/fixtures/latin1_semicolon_valid.csv").unwrap();
         let mut reader = BufReader::new(f);
@@ -179,43 +148,12 @@ mod lib_tests {
     }
 
     #[test]
-    fn run_utf8_semicolon_as_ascii_valid() {
-        let f = File::open("tests/fixtures/utf8_semicolon_valid.csv").unwrap();
-        let mut reader = BufReader::new(f);
-        let mut writer = Vec::new();
-
-        let result = run(
-            &mut reader,
-            &mut writer,
-            Some(3),
-            b';',
-            b'"',
-            b'"',
-            Some("ascii"),
-        );
-        assert!(result.is_ok());
-
-        assert_eq!(writer.len(), 27);
-
-        let output = String::from_utf8(writer).unwrap();
-        assert_eq!(output, "foo,bar,baz\nabc,dÃ©f,ghi\n");
-    }
-
-    #[test]
-    fn run_ascii_semicolon_flexible_valid_2_fields() {
+    fn run_default_semicolon_flexible_valid_2_fields() {
         let f = File::open("tests/fixtures/ascii_semicolon_flexible_valid.csv").unwrap();
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(
-            &mut reader,
-            &mut writer,
-            Some(2),
-            b';',
-            b'"',
-            b'"',
-            Some("ascii"),
-        );
+        let result = run(&mut reader, &mut writer, Some(2), b';', b'"', b'"', None);
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();
@@ -223,20 +161,12 @@ mod lib_tests {
     }
 
     #[test]
-    fn run_ascii_semicolon_flexible_valid_3_fields() {
+    fn run_default_semicolon_flexible_valid_3_fields() {
         let f = File::open("tests/fixtures/ascii_semicolon_flexible_valid.csv").unwrap();
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(
-            &mut reader,
-            &mut writer,
-            Some(3),
-            b';',
-            b'"',
-            b'"',
-            Some("ascii"),
-        );
+        let result = run(&mut reader, &mut writer, Some(3), b';', b'"', b'"', None);
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();
@@ -244,20 +174,12 @@ mod lib_tests {
     }
 
     #[test]
-    fn run_ascii_semicolon_flexible_valid_4_fields() {
+    fn run_default_semicolon_flexible_valid_4_fields() {
         let f = File::open("tests/fixtures/ascii_semicolon_flexible_valid.csv").unwrap();
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(
-            &mut reader,
-            &mut writer,
-            Some(4),
-            b';',
-            b'"',
-            b'"',
-            Some("ascii"),
-        );
+        let result = run(&mut reader, &mut writer, Some(4), b';', b'"', b'"', None);
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();
@@ -265,20 +187,12 @@ mod lib_tests {
     }
 
     #[test]
-    fn run_ascii_semicolon_flexible_valid_flexible_fields() {
+    fn run_default_semicolon_flexible_valid_flexible_fields() {
         let f = File::open("tests/fixtures/ascii_semicolon_flexible_valid.csv").unwrap();
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(
-            &mut reader,
-            &mut writer,
-            None,
-            b';',
-            b'"',
-            b'"',
-            Some("ascii"),
-        );
+        let result = run(&mut reader, &mut writer, None, b';', b'"', b'"', None);
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();
@@ -286,20 +200,12 @@ mod lib_tests {
     }
 
     #[test]
-    fn run_ascii_semicolon_double_quote_valid() {
+    fn run_default_semicolon_double_quote_valid() {
         let f = File::open("tests/fixtures/ascii_semicolon_double_quote_valid.csv").unwrap();
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(
-            &mut reader,
-            &mut writer,
-            Some(3),
-            b';',
-            b'"',
-            b'"',
-            Some("ascii"),
-        );
+        let result = run(&mut reader, &mut writer, Some(3), b';', b'"', b'"', None);
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();
@@ -308,20 +214,12 @@ mod lib_tests {
     }
 
     #[test]
-    fn run_ascii_semicolon_null_quote_valid() {
+    fn run_default_semicolon_null_quote_valid() {
         let f = File::open("tests/fixtures/ascii_semicolon_null_quote_valid.csv").unwrap();
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(
-            &mut reader,
-            &mut writer,
-            Some(3),
-            b';',
-            b'\0',
-            b'\\',
-            Some("ascii"),
-        );
+        let result = run(&mut reader, &mut writer, Some(3), b';', b'\0', b'\\', None);
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();
