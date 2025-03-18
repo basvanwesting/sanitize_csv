@@ -14,7 +14,16 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, Some(3), b';', b'"', b'"', None);
+        let result = run(
+            &mut reader,
+            &mut writer,
+            Some(3),
+            b';',
+            b',',
+            b'"',
+            b'"',
+            None,
+        );
         assert!(result.is_ok());
 
         assert_eq!(writer.len(), 24);
@@ -34,6 +43,7 @@ mod lib_tests {
             &mut writer,
             Some(3),
             b';',
+            b',',
             b'"',
             b'"',
             Some("utf8"),
@@ -57,6 +67,7 @@ mod lib_tests {
             &mut writer,
             Some(3),
             b';',
+            b',',
             b'"',
             b'"',
             Some("latin1"),
@@ -80,6 +91,7 @@ mod lib_tests {
             &mut writer,
             Some(3),
             b';',
+            b',',
             b'"',
             b'"',
             Some("utf8"),
@@ -98,7 +110,16 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, Some(3), b';', b'"', b'"', None);
+        let result = run(
+            &mut reader,
+            &mut writer,
+            Some(3),
+            b';',
+            b',',
+            b'"',
+            b'"',
+            None,
+        );
         assert!(result.is_err());
 
         let e = result.err().unwrap();
@@ -120,6 +141,7 @@ mod lib_tests {
             &mut writer,
             Some(3),
             b';',
+            b',',
             b'"',
             b'"',
             Some("latin1"),
@@ -138,7 +160,16 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, Some(3), b';', b'"', b'"', None);
+        let result = run(
+            &mut reader,
+            &mut writer,
+            Some(3),
+            b';',
+            b',',
+            b'"',
+            b'"',
+            None,
+        );
         assert!(result.is_ok());
 
         assert_eq!(writer.len(), 25);
@@ -153,7 +184,16 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, Some(2), b';', b'"', b'"', None);
+        let result = run(
+            &mut reader,
+            &mut writer,
+            Some(2),
+            b';',
+            b',',
+            b'"',
+            b'"',
+            None,
+        );
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();
@@ -166,7 +206,16 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, Some(3), b';', b'"', b'"', None);
+        let result = run(
+            &mut reader,
+            &mut writer,
+            Some(3),
+            b';',
+            b',',
+            b'"',
+            b'"',
+            None,
+        );
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();
@@ -179,7 +228,16 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, Some(4), b';', b'"', b'"', None);
+        let result = run(
+            &mut reader,
+            &mut writer,
+            Some(4),
+            b';',
+            b',',
+            b'"',
+            b'"',
+            None,
+        );
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();
@@ -192,7 +250,7 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, None, b';', b'"', b'"', None);
+        let result = run(&mut reader, &mut writer, None, b';', b',', b'"', b'"', None);
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();
@@ -205,7 +263,16 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, Some(3), b';', b'"', b'"', None);
+        let result = run(
+            &mut reader,
+            &mut writer,
+            Some(3),
+            b';',
+            b',',
+            b'"',
+            b'"',
+            None,
+        );
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();
@@ -219,7 +286,16 @@ mod lib_tests {
         let mut reader = BufReader::new(f);
         let mut writer = Vec::new();
 
-        let result = run(&mut reader, &mut writer, Some(3), b';', b'\0', b'\\', None);
+        let result = run(
+            &mut reader,
+            &mut writer,
+            Some(3),
+            b';',
+            b',',
+            b'\0',
+            b'\\',
+            None,
+        );
         assert!(result.is_ok());
 
         let output = String::from_utf8(writer).unwrap();

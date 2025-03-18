@@ -13,9 +13,13 @@ use std::{io, process};
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    /// Input Delimiter
-    #[arg(short, long, default_value_t = ',')]
-    delimiter: char,
+    /// input delimiter
+    #[arg(short = 'd', long, default_value_t = ',')]
+    input_delimiter: char,
+
+    /// output delimiter
+    #[arg(short = 'D', long, default_value_t = ',')]
+    output_delimiter: char,
 
     /// Input Quote using
     #[arg(short, long, default_value_t = '"')]
@@ -39,7 +43,8 @@ struct Args {
 fn main() {
     let args = Args::parse();
     let number_of_fields = args.number_of_fields;
-    let delimiter = args.delimiter as u8;
+    let input_delimiter = args.input_delimiter as u8;
+    let output_delimiter = args.output_delimiter as u8;
     let quote = args.quote as u8;
     let escape = args.escape as u8;
     let force_encoding = &args.force_encoding;
@@ -51,7 +56,8 @@ fn main() {
         reader,
         io::stdout(),
         number_of_fields,
-        delimiter,
+        input_delimiter,
+        output_delimiter,
         quote,
         escape,
         force_encoding.as_deref(),

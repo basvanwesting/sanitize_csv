@@ -7,7 +7,8 @@ pub fn run<R, W>(
     io_reader: R,
     io_writer: W,
     number_of_fields: Option<usize>,
-    delimiter: u8,
+    input_delimiter: u8,
+    output_delimiter: u8,
     quote: u8,
     escape: u8,
     force_encoding_label: Option<&str>,
@@ -21,11 +22,12 @@ where
     let io_reader_utf8 = decode_builder.build(io_reader);
 
     let mut csv_reader_builder = csv::ReaderBuilder::new();
-    init_csv_reader_builder(&mut csv_reader_builder, delimiter, quote, escape);
+    init_csv_reader_builder(&mut csv_reader_builder, input_delimiter, quote, escape);
     let mut csv_reader = csv_reader_builder.from_reader(io_reader_utf8);
 
     let mut csv_writer = csv::WriterBuilder::new()
         .flexible(number_of_fields.is_none())
+        .delimiter(output_delimiter)
         .from_writer(io_writer);
 
     for result in csv_reader.records() {
